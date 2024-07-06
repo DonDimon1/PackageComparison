@@ -1,7 +1,6 @@
 #include "libPackageComparison.hpp"
 #include <iostream>
 #include <fstream>
-#include <chrono> // Подключаем библиотеку для измерения времени
 
 // Коллекции всех опций
 const int branchCount = 13;
@@ -48,6 +47,7 @@ bool Start(std::string &branch1, std::string &branch2, std::string &archStr){
     branch1 = branchArr[firstBranch];
     branch2 = branchArr[secondBranch];
     archStr = archArr[archInt];
+    std::cout << std::endl;
 
     return true;
 }
@@ -62,29 +62,22 @@ int main() {
     if(!Start(branch1, branch2, archStr))
         return 1;
 
-        // Измеряем время выполнения функции compareBranches
-        auto start = std::chrono::high_resolution_clock::now(); // Запуск таймера
-
     // Получаем результат сравнения пакетов для двух веток
     auto comparisonResult = compareBranches(branch1, branch2, archStr);
-
-        auto end = std::chrono::high_resolution_clock::now(); // Остановка таймера
-        std::chrono::duration<double> duration = end - start; // Вычисление длительности
-        std::cout << "Time taken by compareBranches: " << duration.count() << " seconds" << std::endl;
 
     // Выводим результат в формате JSON
     //std::cout << toJsonString(comparisonResult) << std::endl;
     std::string jsonOutput = toJsonString(comparisonResult);
 
     // Записываем результат в файл
-        std::ofstream outputFile("comparisonResult.json");
-        if (outputFile.is_open()) {
-            outputFile << jsonOutput;
-            outputFile.close();
-            std::cout << "Comparison result saved to comparison_result.json" << std::endl;
-        } else {
-            std::cerr << "Failed to open comparison_result.json for writing." << std::endl;
-        }
+    std::ofstream outputFile("comparisonResult.json");
+    if (outputFile.is_open()) {
+        outputFile << jsonOutput;
+        outputFile.close();
+        std::cout << "\nComparison result saved to comparison_result.json in the program build folder\n" << std::endl;
+    } else {
+        std::cerr << "\nFailed to open comparison_result.json for writing.\n" << std::endl;
+    }
     return 0;
 }
 

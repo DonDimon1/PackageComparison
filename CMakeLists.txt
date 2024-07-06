@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(CURL REQUIRED)
+find_package(nlohmann_json REQUIRED)
 if(CURL_FOUND)
     message(STATUS "Found libcurl: ${CURL_INCLUDE_DIRS}")
     include_directories(${CURL_INCLUDE_DIRS})
@@ -22,7 +23,7 @@ endif()
 
 #include_directories(${Boost_INCLUDE_DIRS})
 
-add_executable(PackageComparison main.cpp)
+add_executable(PackageComparison main.cpp libPackageComparison.hpp libPackageComparison.cpp)
 
 install(TARGETS PackageComparison LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 

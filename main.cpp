@@ -18,6 +18,7 @@ bool Start(std::string &branch1, std::string &branch2, std::string &archStr){
     std::cout << "Select a two branches:\n\n" << " 1 - sisyphus\n 2 - sisyphus_e2k\n 3 - sisyphus_riscv64\n" <<
                  " 4 - sisyphus_loongarch64\n 5 - p11\n 6 - p10\n 7 - p10_e2k\n 8 - p9\n" <<
                  " 9 - p9_e2k\n 10 - p8\n 11 - c10f1\n 12 - c9f2\n 13 - c7" << std::endl;
+
     std::cout << "\nfirst: ";
     std::cin >> firstBranch;
     std::cout << "second: ";
@@ -80,24 +81,3 @@ int main() {
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

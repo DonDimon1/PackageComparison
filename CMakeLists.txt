@@ -1,23 +1,18 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(PackageComparison LANGUAGES CXX)
+project(PackageComparisonProject)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(CURL REQUIRED)
-find_package(nlohmann_json REQUIRED)
+add_subdirectory(libPackageComparison)
 
-if(CURL_FOUND)
-    message(STATUS "Found libcurl: ${CURL_INCLUDE_DIRS}")
-    include_directories(${CURL_INCLUDE_DIRS})
-else()
-    message(FATAL_ERROR "libcurl not found")
-endif()
+add_executable(PackageComparison main.cpp)
+target_include_directories(PackageComparison PRIVATE libPackageComparison)
 
+# Добавляем rpath, чтобы указать путь к libPackageComparison.so
+set_target_properties(PackageComparison PROPERTIES
+    INSTALL_RPATH "$ORIGIN/../build/libPackageComparison"
+)
 
-add_executable(PackageComparison main.cpp libPackageComparison.hpp libPackageComparison.cpp)
-
-target_link_libraries(PackageComparison CURL::libcurl)
-
-
+target_link_libraries(PackageComparison PackageComparisonLib)
